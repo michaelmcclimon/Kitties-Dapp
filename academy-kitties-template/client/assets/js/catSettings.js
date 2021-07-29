@@ -48,6 +48,8 @@ function getDna(){
     return parseInt(dna)
 }
 
+
+
 function renderCat(dna){
     headColor(colors[dna.headcolor],dna.headcolor)
     $('#bodycolor').val(dna.headcolor)
@@ -67,6 +69,8 @@ function renderCat(dna){
     $('#decorationsides').val(dna.decorationSidescolor)
   
 }
+
+
 
 // Changing cat colors
 $('#bodycolor').change(()=>{
