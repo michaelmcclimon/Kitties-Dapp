@@ -293,7 +293,6 @@
     top: 18px;
     left: 42px;
   }
-
   .inner_foot_big{
     background-color: rosybrown;
     width: 39px;
