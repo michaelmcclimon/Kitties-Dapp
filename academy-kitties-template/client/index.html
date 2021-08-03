@@ -2,7 +2,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Academy kitties </title>
+  <title>Academy Kitties </title>
   <script type="text/javascript" src="assets/js/jquery-3.4.1.js"></script>
   <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
   <script src="assets/bootstrap/js/popper.js"></script>
@@ -98,43 +98,50 @@
 
 <!-- Cat colors -->
 <div id="catColors">
-                <div class="form-group">
+            <button id="btnColorsTab" type="button" class="btn btn-dark">Colors</button>
+            <button id="btnAttributesTab" type="button" class="btn btn-dark">Attributes</button>
+
+                <div id="headGroup" class="form-group">
                     <label for="formControlRange"><b>Head and body</b><span class="badge badge-dark ml-2" id="headcode"></span></label>
                     <input type="range" min="10" max="98" class="form-control-range" id="bodycolor">
                 </div>
-                <div class="form-group">
+                <div id="eyesGroup" class="form-group">
                     <label for="formControlRange"><b>Eyes</b><span class="badge badge-dark ml-2" id="eyescode"></span></label>
                     <input type="range" min="10" max="98" class="form-control-range" id="eyescolor">
                 </div>
-                <div class="form-group">
+                <div id="earsGroup" class="form-group">
                     <label for="formControlRange"><b>Ears</b><span class="badge badge-dark ml-2" id="earscode"></span></label>
                     <input type="range" min="10" max="98" class="form-control-range" id="earscolor">
                 </div>
-                <div class="form-group">
+                <div id="mouthGroup" class="form-group">
                     <label for="formControlRange"><b>Mouth</b><span class="badge badge-dark ml-2" id="mouthcode"></span></label>
                     <input type="range" min="10" max="98" class="form-control-range" id="mouthcolor">
                 </div>
-                <div class="form-group">
+                <div id="eyeShapeGroup" class="form-group">
                     <label for="formControlRange"><b>Eyes shape</b><span class="badge badge-dark ml-2" id="eyeName"></span></label>
                     <input type="range" min="1" max="7" class="form-control-range" id="eyeshape">
                 </div>
-                <div class="form-group">
-                    <label for="formControlRange"><b>Decorative Patern</b><span class="badge badge-dark ml-2" id="decorationName"></span></label>
+                <div id="decoGroup" class="form-group">
+                    <label for="formControlRange"><b>Decorative Pattern</b><span class="badge badge-dark ml-2" id="decorationName"></span></label>
                     <input type="range" min="1" max="7" class="form-control-range" id="decorationpattern">
                 </div>
-                <div class="form-group">
+                <div id="midDecoGroup" class="form-group">
                     <label for="formControlRange"><b>Decoration Mid Color</b><span class="badge badge-dark ml-2" id="midcolorcode"></span></label>
                     <input type="range" min="10" max="98" class="form-control-range" id="decorationmid">
                 </div>
-                <div class="form-group">
+                <div id="sideDecoGroup" class="form-group">
                     <label for="formControlRange"><b>Decoration Sides Color</b><span class="badge badge-dark ml-2" id="sidecolorcode"></span></label>
                     <input type="range" min="10" max="98" class="form-control-range" id="decorationsides">
                 </div>
-                <div class="form-group">
+                <div id="animGroup" class="form-group">
                     <label for="formControlRange"><b>Animations</b><span class="badge badge-dark ml-2" id="animationName"></span></label>
                     <input type="range" min="1" max="6" class="form-control-range" id="animation">
                 </div>
             </div>
+            <div class="col-lg-7">
+                <button id="random" type="button" class="btn btn-dark">Randomize</button>
+                <button id="reset" type="button" class="btn btn-dark">Reset</button>
+                <button type="button" class="btn btn-dark">Create</button>
 
             </div>
 
