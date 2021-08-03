@@ -65,10 +65,11 @@ function renderCat(dna){
     $('#decorationmid').val(dna.decorationMidcolor)
     decorationSidesColor(colors[dna.decorationSidescolor],dna.decorationSidescolor)
     $('#decorationsides').val(dna.decorationSidescolor)
+    animationsPlayer(dna.animation)
+    $('#animation').val(dna.animation)
+
   
 }
-
-
 
 // Changing cat colors
 $('#bodycolor').change(()=>{
@@ -105,4 +106,9 @@ $('#decorationmid').change(()=>{
 $('#decorationsides').change(()=>{
   var colorVal = $('#decorationsides').val()
   decorationSidesColor(colors[colorVal],colorVal)
+})
+$('#animation').change(()=>{
+  var anim = parseInt($('#animation').val())
+  console.log(anim)
+  animationsPlayer(anim)
 })
