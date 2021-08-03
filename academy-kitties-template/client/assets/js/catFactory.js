@@ -214,7 +214,7 @@ function animationType3() {
     $("#pawRIGHT, #pawRIGHTINNER").removeClass("sayHello");
     
 }
-
+ 
 async function normalEyes() {
     await $('.cat__eye').find('span').css('border', 'none')
 }
