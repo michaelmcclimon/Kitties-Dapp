@@ -112,3 +112,93 @@ $('#animation').change(()=>{
   console.log(anim)
   animationsPlayer(anim)
 })
+
+$('#btnColorsTab').click(()=>{
+  $("#headGroup").show()
+  $("#mouthGroup").show()
+  $("#eyesGroup").show()
+  $("#earsGroup").show()
+
+  $("#eyeShapeGroup").hide();
+  $("#decoGroup").hide();
+  $('#midDecoGroup').hide();
+  $('#sideDecoGroup').hide();
+  $("#animGroup").hide();
+})
+
+
+$('#btnAttributesTab').click(()=>{
+  $('#headGroup').hide();
+  $('#mouthGroup').hide();
+  $('#eyesGroup').hide();
+  $('#earsGroup').hide();
+
+  $('#eyeShapeGroup').show();
+  $('#decoGroup').show();
+  $('#midDecoGroup').show();
+  $('#sideDecoGroup').show();
+  $("#animGroup").show();
+})
+
+//Randomize Function
+$('#random').click(()=>{
+  var bodycolor = Math.floor(Math.random() * 89) + 10;
+  headColor(colors[bodycolor],bodycolor)
+  $("#bodycolor").val(bodycolor)
+  var mouthcolor = Math.floor(Math.random() * 89) + 10;
+  mouthColor(colors[mouthcolor],mouthcolor)
+  $("#mouthcolor").val(mouthcolor)
+  var eyescolor = Math.floor(Math.random() * 89) + 10;
+  eyesColor(colors[eyescolor],eyescolor)
+  $("#eyescolor").val(eyescolor)
+  var earscolor = Math.floor(Math.random() * 89) + 10;
+  earsColor(colors[earscolor],earscolor)
+  $("#earscolor").val(earscolor)
+  var eyevar = Math.floor(Math.random() * (7 - 1 + 1) + 1);
+  eyeVariation(eyevar)
+  $("#eyeshape").val(eyevar)
+  var decovar = Math.floor(Math.random() * (7 - 1 + 1) + 1);
+  decorationVariation(decovar)
+  $("#decorationpattern").val(decovar)
+  var decMidVar = Math.floor(Math.random() * 89) + 10;
+  decorationMidColor(colors[decMidVar],decMidVar)
+  $("#decorationmid").val(decMidVar)
+  var decSideVar = Math.floor(Math.random() * 89) + 10;
+  decorationSidesColor(colors[decSideVar],decSideVar)
+  $("#decorationsides").val(decSideVar)
+  var anim = Math.floor(Math.random() * (7 - 1 + 1) + 1);
+  animationsPlayer(anim)
+  $("#animation").val(anim)
+})
+
+$('#reset').click(()=>{
+
+  headColor(colors[defaultDNA.headColor],defaultDNA.headColor)
+  $("#bodycolor").val(defaultDNA.headColor)
+ 
+  mouthColor(colors[defaultDNA.mouthColor],defaultDNA.mouthColor)
+  $("#mouthcolor").val(defaultDNA.mouthColor)
+ 
+  eyesColor(colors[defaultDNA.eyesColor],defaultDNA.eyesColor)
+  $("#eyescolor").val(defaultDNA.eyesColor)
+  
+  earsColor(colors[defaultDNA.earsColor],defaultDNA.earsColor)
+  $("#earscolor").val(defaultDNA.earsColor)
+
+  eyeVariation(defaultDNA.eyesShape)
+  $("#eyeshape").val(defaultDNA.eyesShape)
+  
+  decorationVariation(defaultDNA.decorationPattern)
+  $("#decorationpattern").val(defaultDNA.decorationPattern)
+
+  decorationMidColor(colors[defaultDNA.decorationMidcolor],defaultDNA.decorationMidcolor)
+  $("#decorationmid").val(defaultDNA.decorationMidcolor)
+  
+  decorationSidesColor(colors[defaultDNA.decorationSidescolor],defaultDNA.decorationSidescolor)
+  $("#decorationsides").val(defaultDNA.decorationSidescolor)
+
+  animationsPlayer(defaultDNA.animation)
+  $("#animation").val(defaultDNA.animation)
+
+  
+})
