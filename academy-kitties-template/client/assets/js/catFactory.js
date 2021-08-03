@@ -139,6 +139,82 @@ function decorationVariation(num) {
     }
 }
 
+function animationsPlayer(anim) {
+    $('#dnaanimation').html(anim)
+    switch (anim) {
+        case 1:
+            $('#animationName').html('Wobbely Head')
+            animationType1();
+            break
+        case 2:
+            $('#animationName').html('Side Looking')
+            animationType2();
+            break
+        case 3:
+            
+            $('#animationName').html('Decoration Twist')
+            animationType3();
+            break
+        case 4:
+            
+            $('#animationName').html('Big Ears')
+            animationType4();
+            break
+        case 5:
+            
+            $('#animationName').html('Wiggley Tail')
+            animationType5();
+            break
+        case 6:
+            
+            $('#animationName').html('Whiskers Shake')
+            animationType6();
+            break
+
+        }
+}
+
+function animationType1() {
+    resetAnimation();
+    $("#head").addClass("movingHead");
+}
+
+function animationType2() {
+   resetAnimation();
+   $("#catEyes").addClass("movingEyes");
+}
+
+function animationType3() {
+    resetAnimation();
+    $("#midDot").addClass("midDotSpinning");
+ }
+
+ function animationType4() {
+    resetAnimation();
+    $("#catEars").addClass("earScale");
+ }
+
+ function animationType5() {
+    resetAnimation();
+    $("#tail").addClass("tailWig");
+ }
+
+ function animationType6() {
+    resetAnimation();
+    $("#whiskLeft, #whiskRight").addClass("whiskShake");
+ }
+
+ function resetAnimation(){
+    $("#head").removeClass("movingHead");
+    $("#catEyes").removeClass("movingEyes");
+    $("#midDot").removeClass("midDotSpinning");
+    $("#catEars").removeClass("earScale");
+    $("#tail").removeClass("tailWig");
+    $("#whiskLeft, #whiskRight").removeClass("whiskShake");
+    $("#pawRIGHT, #pawRIGHTINNER").removeClass("sayHello");
+    
+}
+
 async function normalEyes() {
     await $('.cat__eye').find('span').css('border', 'none')
 }
