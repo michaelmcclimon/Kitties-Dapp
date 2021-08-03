@@ -1,0 +1,128 @@
+.movingHead {
+    animation: moveHead 2s infinite;
+}
+
+@keyframes moveHead {
+    0% {
+        transform: rotate(0deg);
+    }
+    33% {
+        transform: rotate(7deg);
+    }
+    66% {
+        transform: rotate(-7deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+.movingEyes {
+    animation: moveEyes 2s infinite;
+}
+
+@keyframes moveEyes {
+    0% {
+        left: -32px;
+    }
+    33% {
+        left: 0px;
+    }
+    66% {
+        left: -50px;
+    }
+    100% {
+        left: -32px;
+    }
+}
+
+.earScale {
+    animation: bigEars 4s infinite;
+}
+
+@keyframes bigEars {
+    0% {
+        transform: scale(1);
+        left: 0px;
+    }
+    50% {
+        transform: scale(1.3);
+        left: 15px;
+    }
+    100% {
+        transform: scale(1);
+        left: 0px;
+    }
+}
+
+.tailWig {
+    animation: wiggelyTail 1s infinite;
+}
+
+@keyframes wiggelyTail {
+    0% {
+        transform: skewY(0deg)
+    }
+    33% {
+        transform: skewY(20deg)
+    }
+    90%{
+        transform: skewY(-20deg)
+    }
+    100% {
+        transform: skewY(0deg)
+    }
+}
+
+.whiskShake {
+    animation: shakeWhisks 1.5s infinite;
+}
+
+@keyframes shakeWhisks {
+    0% {
+        transform: skewY(0deg)
+    }
+    33% {
+        transform: skewY(8deg)
+    }
+    90%{
+        transform: skewY(-8deg)
+    }
+    100% {
+        transform: skewY(0deg)
+    }
+}
+
+.sayHello {
+    animation: wink 1s infinite;
+}
+
+@keyframes wink {
+    0% {
+        transform: rotate(0deg)
+    }
+    33% {
+        transform: rotate(35deg)
+    }
+    90%{
+        transform: rotate(-35deg)
+    }
+    100% {
+        transform: rotate(0deg)
+    }
+}
+.midDotSpinning {
+    animation: midDotSpinning 2s infinite;
+}
+
+@keyframes midDotSpinning {
+    0% {
+        transform: rotate3d(0);
+    }
+    50% {
+        transform: rotate3d(0, 1, 0, 3.14rad);
+    }
+    100% {
+        transform: rotate3d(0);
+    }
+}
