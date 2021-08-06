@@ -1,9 +1,13 @@
 pragma solidity >=0.4.22 <0.9.0;
 
 import "./IERC721.sol";
+import "./Ownable.sol";
 
- contract Kittycontract is IERC721 {
-   
+ contract Kittycontract is IERC721, Ownable {
+    
+    // Gen 0 Creation Limit
+    uint256 public constant CREATION_LIMIT_GEN0 = 10;
+
     // Token name
     string public constant name = "MickeyKitties";
 
@@ -21,13 +25,37 @@ import "./IERC721.sol";
         uint16 generation;
     }
 
-    Kitty[] kittes;
+    Kitty[] kitties;
 
     mapping (uint256 => address) public kittyIndexToOwner; // tokenId => kitty owner
     mapping (address => uint) ownershipTokenCount; //count of how many kitties each owner has
-    
-    function createKittyGen0(uint256 _genes) public onlyOwner {
 
+    uint256 public gen0Counter;
+
+
+    function getKitty(uint256 _id) external view returns (
+        uint256 genes,
+        uint256 birthTime,
+        uint256 momId,
+        uint256 dadId,
+        uint256 generation
+    )
+    {
+        Kitty storage kitty = kitties[_id];
+
+        birthTime = uint256(kitty.birthTime);
+        momId = uint256(kitty.momId);
+        dadId = uint256(kitty.dadId);
+        generation = uint256(kitty.generation);
+        genes = kitty.genes;
+    }
+    
+    function createKittyGen0(uint256 _genes) public onlyOwner returns (uint256) {
+        require(gen0Counter < CREATION_LIMIT_GEN0);
+
+        gen0Counter++;
+
+        return _createKitty(0, 0, 0, _genes, msg.sender);
     }
 
     function _createKitty(
@@ -38,7 +66,7 @@ import "./IERC721.sol";
         address _owner
     )  private returns (uint256) {
         Kitty memory _kitty = Kitty({
-            genes: _gene,
+            genes: _genes,
             birthTime: uint64(now),
             momId: uint32(_momId),
             dadId: uint32(_dadId),
@@ -63,19 +91,19 @@ import "./IERC721.sol";
      * @dev Returns the total number of tokens in circulation.
      */
     function totalSupply() external view override returns (uint256){
-        return _totalSupply;
+        return kitties.length;
     }
     /*
      * @dev Returns the name of the token.
      */
     function catName() external view override returns (string memory){
-        return _name;
+        return name;
     }
     /*
      * @dev Returns the symbol of the token.
      */
     function catSymbol() external view override returns (string memory) {
-        return _symbol;
+        return symbol;
     }
     /**
      * @dev Returns the owner of the `tokenId` token.
@@ -89,7 +117,7 @@ import "./IERC721.sol";
         return kittyIndexToOwner[tokenId];
     }
 
-    function transfer(address _to,uint256 _toeknId) external {
+    function transfer(address _to,uint256 _tokenId) external {
 
         require(_to != address(0));
         require(_to != address(this));
@@ -100,14 +128,14 @@ import "./IERC721.sol";
     function _transfer(address _from, address _to, uint256 tokenId) internal {
         ownershipTokenCount[_to]++;
 
-        kittyIndexToOwner[_tokenId] = _to;
+        kittyIndexToOwner[tokenId] = _to;
 
         if (_from != address(0)) {
             ownershipTokenCount[_from]--;
         }
 
         // Emit the transfer event
-        emit Transfer(_from, _to, _tokenId);
+        emit Transfer(_from, _to, tokenId);
 
     }
 
