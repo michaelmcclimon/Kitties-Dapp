@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 pragma solidity >=0.4.22 <0.9.0;
 
 import "./IERC721.sol";
@@ -9,10 +10,10 @@ import "./Ownable.sol";
     uint256 public constant CREATION_LIMIT_GEN0 = 10;
 
     // Token name
-    string public constant name = "MickeyKitties";
+    string public constant override name = "MickeyKitties";
 
     // Token symbol
-    string public constant symbol = "GG";
+    string public constant override symbol = "GG";
 
     event Birth(address owner, uint256 kittenId, uint256 momId, uint256 dadId, uint256 genes);
 
@@ -67,13 +68,13 @@ import "./Ownable.sol";
     )  private returns (uint256) {
         Kitty memory _kitty = Kitty({
             genes: _genes,
-            birthTime: uint64(now),
+            birthTime: uint64(block.timestamp),
             momId: uint32(_momId),
             dadId: uint32(_dadId),
             generation: uint16(_generation)
         });
 
-        uint256 newKittenId = kitties.push(_kitty) - 1;
+        uint256 newKittenId = kitties.push(_kitty) -1;
 
         emit Birth(_owner, newKittenId, _momId, _dadId, _genes);
 
@@ -96,13 +97,13 @@ import "./Ownable.sol";
     /*
      * @dev Returns the name of the token.
      */
-    function catName() external view override returns (string memory){
+    function catName() external view  returns (string memory){
         return name;
     }
     /*
      * @dev Returns the symbol of the token.
      */
-    function catSymbol() external view override returns (string memory) {
+    function catSymbol() external view  returns (string memory) {
         return symbol;
     }
     /**
@@ -117,11 +118,11 @@ import "./Ownable.sol";
         return kittyIndexToOwner[tokenId];
     }
 
-    function transfer(address _to,uint256 _tokenId) external {
+    function transfer(address _to,uint256 _tokenId) external override {
 
-        require(_to != address(0));
-        require(_to != address(this));
-        require(_owns(msg.sender, _to, _tokenId));
+        require(_to != address(0), "_to cant be a zero address");
+        require(_to != address(this), "not the same address as _to");
+        require(kittyIndexToOwner[_tokenId] == msg.sender);
     }
 
 
