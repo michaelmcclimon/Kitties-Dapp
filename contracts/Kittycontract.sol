@@ -74,7 +74,8 @@ import "./Ownable.sol";
             generation: uint16(_generation)
         });
 
-        uint256 newKittenId = kitties.push(_kitty) -1;
+         kitties.push(_kitty); 
+       uint256 newKittenId = kitties.length - 1;
 
         emit Birth(_owner, newKittenId, _momId, _dadId, _genes);
 
@@ -97,13 +98,13 @@ import "./Ownable.sol";
     /*
      * @dev Returns the name of the token.
      */
-    function catName() external view  returns (string memory){
+    function catName() external pure returns (string memory){
         return name;
     }
     /*
      * @dev Returns the symbol of the token.
      */
-    function catSymbol() external view  returns (string memory) {
+    function catSymbol()  external pure returns (string memory) {
         return symbol;
     }
     /**
@@ -118,7 +119,7 @@ import "./Ownable.sol";
         return kittyIndexToOwner[tokenId];
     }
 
-    function transfer(address _to,uint256 _tokenId) external override {
+    function transfer(address _to,uint256 _tokenId) external override view {
 
         require(_to != address(0), "_to cant be a zero address");
         require(_to != address(this), "not the same address as _to");
