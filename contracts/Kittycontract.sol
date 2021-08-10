@@ -30,6 +30,7 @@ import "./Ownable.sol";
 
     mapping (uint256 => address) public kittyIndexToOwner; // tokenId => kitty owner
     mapping (address => uint) ownershipTokenCount; //count of how many kitties each owner has
+    mapping(uint256 => address) public kittyIndexToApproved;
 
     uint256 public gen0Counter;
 
