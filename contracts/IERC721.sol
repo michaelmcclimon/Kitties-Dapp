@@ -14,7 +14,7 @@ interface IERC721 {
     event Approval(address indexed owner, address indexed approved, uint256 indexed tokenId);
 
        /**
-     * @dev Emitted when `owner` enables `approved` to manage the `tokenId` token.
+     * @dev Emitted when `owner` enables `approved` to manage all `tokenId` token.
      */
     event  SetApprovalForAll(address msgsender,address operator, bool approved);
     /**
