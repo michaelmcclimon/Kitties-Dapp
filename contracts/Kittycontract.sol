@@ -187,4 +187,11 @@ import "./Ownable.sol";
 
     }
 
+    function _owns(address _claimant, uint256 _tokenId) internal view returns (bool) {
+        return kittyIndexToOwner[_tokenId] == _claimant;
+    }
+    function _approve(uint256 _tokenId, address _approved) internal {
+        kittyIndexToApproved[_tokenId] = _approved;
+    }
+
  }   
