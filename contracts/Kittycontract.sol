@@ -53,7 +53,7 @@ import "./Ownable.sol";
         require(operator != msg.sender);
 
         _operatorApprovals[msg.sender][operator] = approved;
-        emit SetApprovalForAll(msg.sender, operator, approved);
+        emit _setApprovalForAll(msg.sender, operator, approved);
     }
 
     function getApproved(uint256 tokenId) public view returns (address) {
