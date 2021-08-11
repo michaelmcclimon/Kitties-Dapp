@@ -15,7 +15,12 @@ import "./Ownable.sol";
     // Token symbol
     string public constant override symbol = "GG";
 
-    event Birth(address owner, uint256 kittenId, uint256 momId, uint256 dadId, uint256 genes);
+    event Birth(
+        address owner, 
+        uint256 kittenId, 
+        uint256 momId, 
+        uint256 dadId, 
+        uint256 genes);
 
 
     struct Kitty {
@@ -37,10 +42,11 @@ import "./Ownable.sol";
     uint256 public gen0Counter;
 
     function approve(address _to, uint256 _tokenId) public {
-        require(_owns(msg.sender, _tokenId));
+        require(kittyIndexToOwner[_tokenId] == msg.sender, "not token owner");
+
         
 
-        approve(_tokenId, _to);
+        approve(_to, _tokenId);
         emit Approval(msg.sender, _to, _tokenId);
     }
 
@@ -48,7 +54,7 @@ import "./Ownable.sol";
         require(operator != msg.sender);
 
         _operatorApprovals[msg.sender][operator] = approved;
-        emit setApprovalForAll(msg.sender, operator, approved);
+        emit SetApprovalForAll(msg.sender, operator, approved);
     }
 
     function getApproved(uint256 tokenId) public view returns (address) {
