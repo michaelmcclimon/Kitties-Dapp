@@ -42,11 +42,10 @@ import "./Ownable.sol";
     uint256 public gen0Counter;
 
     function approve(address _to, uint256 _tokenId) public {
-        require(kittyIndexToOwner[_tokenId] == msg.sender, "not token owner");
-
+        require(_owns(msg.sender, _tokenId),"Not Token Owner!");
         
 
-        approve(_to, _tokenId);
+        _approve(_tokenId, _to);
         emit Approval(msg.sender, _to, _tokenId);
     }
 
