@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 pragma solidity >=0.4.22 <0.9.0;
 /**
  * @dev Required interface of an ERC721 compliant contract.
@@ -16,7 +17,7 @@ interface IERC721 {
        /**
      * @dev Emitted when `owner` enables `approved` to manage all `tokenId` token.
      */
-    event  SetApprovalForAll(address msgsender,address operator, bool approved);
+    event  _setApprovalForAll(address msgsender,address operator, bool approved);
     /**
 
     /**
