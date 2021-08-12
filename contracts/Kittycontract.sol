@@ -179,6 +179,7 @@ import "./Ownable.sol";
 
         if (_from != address(0)) {
             ownershipTokenCount[_from]--;
+            delete kittyIndexToApproved[tokenId];
         }
 
         // Emit the transfer event
