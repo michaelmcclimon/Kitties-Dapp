@@ -4,7 +4,7 @@ pragma solidity >=0.4.22 <0.9.0;
 import "./IERC721.sol";
 import "./Ownable.sol";
 
- contract Kittycontract is IERC721, Ownable {
+ abstract contract Kittycontract is IERC721, Ownable {
     
     // Gen 0 Creation Limit
     uint256 public constant CREATION_LIMIT_GEN0 = 10;
@@ -65,6 +65,15 @@ import "./Ownable.sol";
     function isApprovedForAll(address owner, address operator) public view returns (bool){
         return _operatorApprovals[owner][operator];
     }
+
+   function transferFrom(address _from, address _to, uint256 _tokenId) public override payable {
+       require(_to != address(0),"Receiver cannot have address(0)");
+       require(msg.sender == _from || _approvedFor(msg.sender, _tokenId) || isApprovedForAll(_from, msg.sender));
+       require(_owns(_from, _tokenId));
+       require(_tokenId < kitties.length);
+
+       _transfer(_from, _to, _tokenId);
+   }
 
     function getKittyByOwner(address _owner) external view returns(uint [] memory) {
         uint [] memory result = new uint [] (ownershipTokenCount[_owner]);
@@ -138,7 +147,7 @@ import "./Ownable.sol";
      * @dev Returns the total number of tokens in circulation.
      */
     function totalSupply() external view override returns (uint256){
-        return kitties.length;
+        return kitties.length; // length of []kitties
     }
     /*
      * @dev Returns the name of the token.
@@ -168,17 +177,17 @@ import "./Ownable.sol";
 
         require(_to != address(0), "_to cant be a zero address");
         require(_to != address(this), "not the same address as _to");
-        require(kittyIndexToOwner[_tokenId] == msg.sender);
+        require(_owns(msg.sender, _tokenId));
     }
 
 
     function _transfer(address _from, address _to, uint256 tokenId) internal {
-        ownershipTokenCount[_to]++;
+        ownershipTokenCount[_to]++; // Increase token count for recipient.
 
         kittyIndexToOwner[tokenId] = _to;
 
         if (_from != address(0)) {
-            ownershipTokenCount[_from]--;
+            ownershipTokenCount[_from]--; // Decrease token count from sender.
             delete kittyIndexToApproved[tokenId];
         }
 
@@ -188,10 +197,14 @@ import "./Ownable.sol";
     }
 
     function _owns(address _claimant, uint256 _tokenId) internal view returns (bool) {
-        return kittyIndexToOwner[_tokenId] == _claimant;
+        return kittyIndexToOwner[_tokenId] == _claimant; // For multiple use with _owns
     }
     function _approve(uint256 _tokenId, address _approved) internal {
         kittyIndexToApproved[_tokenId] = _approved;
     }
 
+    function _approvedFor(address _claimant, uint256 _tokenId) internal view returns (bool) {
+        return kittyIndexToApproved[_tokenId] == _claimant;
+    }
+   
  }   
