@@ -17,6 +17,8 @@ import "./Ownable.sol";
     string public constant override symbol = "GG";
 
     bytes4 internal constant MAGIC_ERC721_RECEIVED = bytes4(keccak256("onERC721Received(address,address,uint256,bytes)"));
+    bytes4 private constant _INTERFACE_ID_ERC721 =  0x80ac58cd;
+    bytes4 private constant _INTERFACE_ID_ERC165 =  0x01ffc9a7;
 
     event Birth(
         address owner, 
