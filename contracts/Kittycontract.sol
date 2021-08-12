@@ -2,6 +2,7 @@
 pragma solidity >=0.4.22 <0.9.0;
 
 import "./IERC721.sol";
+import "./IERC721Receiver.sol";
 import "./Ownable.sol";
 
  abstract contract Kittycontract is IERC721, Ownable {
@@ -14,6 +15,8 @@ import "./Ownable.sol";
 
     // Token symbol
     string public constant override symbol = "GG";
+
+    bytes4 internal constant MAGIC_ERC721_RECEIVED = bytes4(keccak256("onERC721Received(address,address,uint256,bytes)"));
 
     event Birth(
         address owner, 
@@ -40,6 +43,24 @@ import "./Ownable.sol";
     mapping(address => mapping (address => bool)) private _operatorApprovals;
     
     uint256 public gen0Counter;
+
+    function safeTransferFrom(address _from, address _to, uint256 _tokenId) public override {
+           safeTransferFrom(_from, _to, _tokenId, "");
+       }
+
+    function safeTransferFrom(address _from, address _to, uint256 _tokenId, bytes memory _data) public override  {
+       require(_to != address(0),"Receiver cannot have address(0)");
+       require(msg.sender == _from || _approvedFor(msg.sender, _tokenId) || isApprovedForAll(_from, msg.sender));
+       require(_owns(_from, _tokenId));
+       require(_tokenId < kitties.length);
+
+       _safeTransfer(_from, _to, _tokenId, _data);
+   }
+
+    function _safeTransfer(address _from, address _to, uint256 _tokenId, bytes memory _data) internal {
+        _transfer(_from, _to, _tokenId);
+        require(_checkERC721Support(_from, _to, _tokenId, _data) );
+    }
 
     function approve(address _to, uint256 _tokenId) public {
         require(_owns(msg.sender, _tokenId),"Not Token Owner!");
@@ -205,6 +226,23 @@ import "./Ownable.sol";
 
     function _approvedFor(address _claimant, uint256 _tokenId) internal view returns (bool) {
         return kittyIndexToApproved[_tokenId] == _claimant;
+    }
+
+    function _checkERC721Support(address _from, address _to, uint256 _tokenId, bytes memory _data) internal returns (bool) {
+        if(!_isContract(_to) ){
+            return true;
+        }
+
+        bytes4 returnData = IERC721Receiver(_to).onERC721Received(msg.sender, _from, _tokenId, _data);
+        return returnData == MAGIC_ERC721_RECEIVED;
+    }
+
+    function _isContract(address _to) view internal returns (bool){
+        uint32 size;
+        assembly{
+            size := extcodesize(_to)
+        }
+        return size > 0;
     }
    
  }   
