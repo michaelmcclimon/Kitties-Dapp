@@ -5,7 +5,7 @@ var user;
 var contractAddress = "0x8955C96CC19A232eebA34106073E22b917e591D2";
 
 $(document).ready(function(){
-    window.ethereum.enable().then(function(accounts){
+    window.ethereum.enable().then(function(accounts) {
         instance = new web3.eth.Contract(abi, contractAddress, {from: accounts[0]})
         user = accounts[0];
 
@@ -14,34 +14,35 @@ $(document).ready(function(){
     })
 })
 
-function createKitty() {
-    var kittyDna = getDna();
-    instance.methods.createKittyGen0(kittyDna).send({}, function(err, txHash) {
-        if(err) {
-            console.log(err);
+async function createKitty() {
+    var dnaString = getDna();
+    console.log(dnaString);
+    await instance.methods.createKittyGen0(dnaString).send({}, function(error, txHash) {
+        if(error) {
+            console.log(error);
         } else {
-            alert("Transaction sent!");
             console.log(txHash);
-            instance.events.Birth().on('connected', function(subscriptionId) {
-                console.log(subscriptionId);
+            instance.events.Birth().on('data', function(event){
+                console.log(event);
+                let owner = event.returnValues.owner;
+                console.log(owner);
+                let bearId = event.returnValues.kittenId;
+                console.log(kittenId);
+                let mumId = event.returnValues.momId;
+                console.log(momId);
+                let dadId = event.returnValues.dadId;
+                console.log(dadId);
+                let genes = event.returnValues.genes;
+                console.log(genes);
+
+                $("#kittyCreated").css("display", "block");
+                $("#kittyCreated").text("Kitten Id: " + kittenId +
+                                       " Owner: " + owner + 
+                                       " MumId: " + momId + 
+                                       " DadId: " + dadId +
+                                       " Genes: " + genes );
             }) 
-            .on('error', function(error){
-                console.log(error);
-                alert("Kitty Birth failed");
-            })
-            .on('data', function(event) {
-                alert(`Kitty birth successful! \n
-                Kitty Owner: ${event.returnValues.owner}\n
-                Kitty ID: ${event.returnValues.kittenId}\n
-                Mommy Cat: ${event.returnValues.momId}\n
-                Daddy Cat: ${event.returnValues.dadId}\n
-                Kitty Genes: ${event.returnValues.genes}
-                `)
-            })
+            .on('error', console.error); 
         }
     })
 }
-
-$('#create').click(() => {
-    createKitty(getDna());
-})
