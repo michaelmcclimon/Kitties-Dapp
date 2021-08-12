@@ -46,6 +46,10 @@ import "./Ownable.sol";
     
     uint256 public gen0Counter;
 
+    function supportsInterface(bytes4 _interfaceId) external pure returns (bool) {
+        return ( _interfaceId == _INTERFACE_ID_ERC721 || _interfaceId == _INTERFACE_ID_ERC165);
+    }
+
     function safeTransferFrom(address _from, address _to, uint256 _tokenId) public override {
            safeTransferFrom(_from, _to, _tokenId, "");
        }
