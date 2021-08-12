@@ -26,9 +26,9 @@ async function createKitty() {
                 console.log(event);
                 let owner = event.returnValues.owner;
                 console.log(owner);
-                let bearId = event.returnValues.kittenId;
+                let newKittenId = event.returnValues.newKittenId;
                 console.log(kittenId);
-                let mumId = event.returnValues.momId;
+                let momId = event.returnValues.momId;
                 console.log(momId);
                 let dadId = event.returnValues.dadId;
                 console.log(dadId);
@@ -36,7 +36,7 @@ async function createKitty() {
                 console.log(genes);
 
                 $("#kittyCreated").css("display", "block");
-                $("#kittyCreated").text("Kitten Id: " + kittenId +
+                $("#kittyCreated").text("Kitten Id: " + newKittenId +
                                        " Owner: " + owner + 
                                        " MumId: " + momId + 
                                        " DadId: " + dadId +
