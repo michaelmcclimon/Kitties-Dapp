@@ -123,7 +123,7 @@ import "./Ownable.sol";
         uint256 generation
     )
     {
-        Kitty storage kitty = kitties[_id];
+        Kitty storage kitty = kitties[_id]; // using storage not memory, no need to make a local copy.
 
         birthTime = uint256(kitty.birthTime);
         momId = uint256(kitty.momId);
