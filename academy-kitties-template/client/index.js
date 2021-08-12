@@ -6,7 +6,7 @@ var contractAddress = "0x8955C96CC19A232eebA34106073E22b917e591D2";
 
 $(document).ready(function(){
     window.ethereum.enable().then(function(accounts) {
-        instance = new web3.eth.Contract(abi, contractAddress, {from: accounts[0]})
+        instance = new web3.eth.Contract(abi, contractAddress, {from: accounts[0]});
         user = accounts[0];
 
         console.log(instance);
