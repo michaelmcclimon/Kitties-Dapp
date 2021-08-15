@@ -1,11 +1,11 @@
-// SPDX-License-Identifier: MIT 
+// SPDX-License-Identifier: MIT
 pragma solidity >=0.4.22 <0.9.0;
 
 import "./IERC721.sol";
 import "./IERC721Receiver.sol";
 import "./Ownable.sol";
 
- contract Kittycontract is IERC721, Ownable {
+contract Kittycontract is IERC721, Ownable {
     
     // Gen 0 Creation Limit
     uint256 public constant CREATION_LIMIT_GEN0 = 10;
@@ -13,9 +13,10 @@ import "./Ownable.sol";
     // Token name
     string public constant override name = "MickeyKitties";
 
+    
     // Token symbol
     string public constant override symbol = "GG";
-
+    
     bytes4 internal constant MAGIC_ERC721_RECEIVED = bytes4(keccak256("onERC721Received(address,address,uint256,bytes)"));
     bytes4 private constant _INTERFACE_ID_ERC721 =  0x80ac58cd;
     bytes4 private constant _INTERFACE_ID_ERC165 =  0x01ffc9a7;
@@ -51,17 +52,17 @@ import "./Ownable.sol";
     }
 
     function safeTransferFrom(address _from, address _to, uint256 _tokenId) public override {
-           safeTransferFrom(_from, _to, _tokenId, "");
-       }
+        safeTransferFrom(_from, _to, _tokenId, "");
+    }
 
     function safeTransferFrom(address _from, address _to, uint256 _tokenId, bytes memory _data) public override  {
-       require(_to != address(0),"Receiver cannot have address(0)");
-       require(msg.sender == _from || _approvedFor(msg.sender, _tokenId) || isApprovedForAll(_from, msg.sender));
-       require(_owns(_from, _tokenId));
-       require(_tokenId < kitties.length);
+    require(_to != address(0),"Receiver cannot have address(0)");
+    require(msg.sender == _from || _approvedFor(msg.sender, _tokenId) || isApprovedForAll(_from, msg.sender));
+    require(_owns(_from, _tokenId));
+    require(_tokenId < kitties.length);
 
-       _safeTransfer(_from, _to, _tokenId, _data);
-   }
+    _safeTransfer(_from, _to, _tokenId, _data);
+}
 
     function _safeTransfer(address _from, address _to, uint256 _tokenId, bytes memory _data) internal {
         _transfer(_from, _to, _tokenId);
@@ -93,14 +94,14 @@ import "./Ownable.sol";
         return _operatorApprovals[owner][operator];
     }
 
-   function transferFrom(address _from, address _to, uint256 _tokenId) public override payable {
-       require(_to != address(0),"Receiver cannot have address(0)");
-       require(msg.sender == _from || _approvedFor(msg.sender, _tokenId) || isApprovedForAll(_from, msg.sender));
-       require(_owns(_from, _tokenId));
-       require(_tokenId < kitties.length);
+function transferFrom(address _from, address _to, uint256 _tokenId) public override payable {
+    require(_to != address(0),"Receiver cannot have address(0)");
+    require(msg.sender == _from || _approvedFor(msg.sender, _tokenId) || isApprovedForAll(_from, msg.sender));
+    require(_owns(_from, _tokenId));
+    require(_tokenId < kitties.length);
 
-       _transfer(_from, _to, _tokenId);
-   }
+    _transfer(_from, _to, _tokenId);
+}
 
     function getKittyByOwner(address _owner) external view returns(uint [] memory) {
         uint [] memory result = new uint [] (ownershipTokenCount[_owner]);
@@ -132,6 +133,7 @@ import "./Ownable.sol";
         genes = kitty.genes;
     }
     
+    //Miting Gen0 NFT
     function createKittyGen0(uint256 _genes) public onlyOwner returns (uint256) {
         require(gen0Counter < CREATION_LIMIT_GEN0);
 
@@ -155,8 +157,8 @@ import "./Ownable.sol";
             generation: uint16(_generation)
         });
 
-         kitties.push(_kitty); 
-       uint256 newKittenId = kitties.length - 1;
+        kitties.push(_kitty);
+    uint256 newKittenId = kitties.length - 1;
 
         emit Birth(_owner, newKittenId, _momId, _dadId, _genes);
 
@@ -164,6 +166,20 @@ import "./Ownable.sol";
 
         return newKittenId;
     }
+
+    function breed(uint _dadId, uint _momId) public returns(uint){
+        require(_dadId != _momId,'DadID and mumID can not be equal');
+        require(_owns(msg.sender,_dadId),'Dad token does not belong to the owner');
+        require(_owns(msg.sender,_momId),'Mum token does not belong to the owner');
+
+        Kitty memory dad = kitties[_dadId];
+        Kitty memory mum = kitties[_momId];
+        uint babyDNA = _mixDNA(dad.genes,mum.genes);
+        uint babyGEN = (_dadId >= _momId) ? (_dadId + 1):( _momId + 1);
+
+        return _createKitty(_momId,_dadId,babyDNA,babyGEN,msg.sender);
+    }
+
 
      //Returns the number of tokens in ``owner``'s account.
     function balanceOf(address owner) external view override returns (uint256) {
@@ -250,5 +266,13 @@ import "./Ownable.sol";
         }
         return size > 0;
     }
-   
- }   
+
+    function _mixDNA(uint dadDNA,uint momDNA) pure internal returns(uint){
+        uint firstHalf = dadDNA / 100000000; // Dad DNA half
+        uint secondHalf = momDNA % 100000000; // Mom DNA half
+
+        uint newDNA = firstHalf * 100000000 + secondHalf; // New DNA from parents
+        return newDNA;
+    }
+
+}   
