@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.4.22 <0.9.0;
 
+
 import "./Kittycontract.sol";
 import "./Ownable.sol";
+import "./Marketplace.sol";
 
 /*
  * Market place to trade kitties (should **in theory** be used for any ERC721 token)
@@ -10,7 +12,7 @@ import "./Ownable.sol";
  * Note: it does not inherit from the kitty contracts
  * Note: The contract needs to be an operator for everyone who is selling through this contract.
  */
-interface IKittyMarketPlace {
+interface IMarketPlace {
 
     event MarketTransaction(string TxType, address owner, uint256 tokenId);
 
@@ -26,9 +28,9 @@ interface IKittyMarketPlace {
     function getOffer(uint256 _tokenId) external view returns ( address seller, uint256 price, uint256 index, uint256 tokenId, bool active);
 
     /**
-    * Get all tokenId's that are currently for sale. Returns an empty arror if none exist.
+    * Get all tokenId's that are currently for sale. Returns an empty array if none exist.
      */
-    function getAllTokenOnSale() external view  returns(uint256[] memory listOfOffers);
+    function getAllTokenOnSale() external returns(uint256[] memory listOfOffers);
 
     /**
     * Creates a new offer for _tokenId for the price _price.
