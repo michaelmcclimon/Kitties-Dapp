@@ -168,9 +168,9 @@ function transferFrom(address _from, address _to, uint256 _tokenId) public overr
     }
 
     function breed(uint _dadId, uint _momId) public returns(uint){
-        require(_dadId != _momId,'DadID and mumID can not be equal');
+        require(_dadId != _momId,'DadID and momID cannot be the same');
         require(_owns(msg.sender,_dadId),'Dad token does not belong to the owner');
-        require(_owns(msg.sender,_momId),'Mum token does not belong to the owner');
+        require(_owns(msg.sender,_momId),'Mom token does not belong to the owner');
 
         Kitty memory dad = kitties[_dadId];
         Kitty memory mum = kitties[_momId];
@@ -275,4 +275,85 @@ function transferFrom(address _from, address _to, uint256 _tokenId) public overr
         return newDNA;
     }
 
+    function _mixDna(uint256 dadDNA, uint256 momDNA) internal view returns (uint256) {
+        {
+
+    uint256[8] memory geneArray;
+
+    //pseudo-random: Not used for betting and monetary stuff
+
+    //binary 8bit between 00000000 to 11111111
+
+    uint8 random = uint8(
+
+        uint256(
+
+            keccak256(abi.encodePacked(block.timestamp, block.difficulty))
+
+        ) % 255
+
+    );
+
+    //1, 2, 4, 8, 16, 32, 64, 128, loop through 8 times
+
+    //values of the 8 numbers above in binary
+
+    //00000001, 00000010, 00000100, 00001000,
+
+    //00010000, 00100000, 01000000, 10000000
+
+    //bitwise operator &
+
+    uint256 i = 1;
+
+    uint256 index = 7;
+
+    for (i = 1; i <= 128; i *= 2) {
+
+        if (random & i != 0) {
+
+            geneArray[index] = uint8(momDNA % 100); //last pair
+
+        } else {
+
+            geneArray[index] = uint8(dadDNA % 100);
+
+        }
+
+        //now remove last pair from dna
+
+        momDNA /= 100;
+
+        dadDNA /= 100;
+
+        //reduce index to set position to previous (e.g. from 7 to 6)
+
+        index--;
+
+    }
+
+    //create DNA into a full number
+
+    uint256 newGene;
+
+    for (i = 0; i < 8; i++) {
+
+        newGene += geneArray[i]; //add first pair to mewGene
+
+        if (i != 7) {
+
+            //to not add 2 zeroes after the last pair
+
+            newGene *= 100; //adds two zeroes (00), at the end of each pair
+
+        }
+
+    }
+
+    return newGene;
+
+}
+    }
+
 }   
+  
