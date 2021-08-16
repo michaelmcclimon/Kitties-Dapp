@@ -17,6 +17,7 @@ contract Kittycontract is IERC721, Ownable {
     // Token symbol
     string public constant override symbol = "GG";
     
+    // Checking for ERC721 on other end of transfer.
     bytes4 internal constant MAGIC_ERC721_RECEIVED = bytes4(keccak256("onERC721Received(address,address,uint256,bytes)"));
     bytes4 private constant _INTERFACE_ID_ERC721 =  0x80ac58cd;
     bytes4 private constant _INTERFACE_ID_ERC165 =  0x01ffc9a7;
@@ -42,8 +43,8 @@ contract Kittycontract is IERC721, Ownable {
     mapping (uint256 => address) public kittyIndexToOwner; // tokenId => kitty owner
     mapping (address => uint) ownershipTokenCount; //count of how many kitties each owner has
     
-    mapping(uint256 => address) public kittyIndexToApproved;
-    mapping(address => mapping (address => bool)) private _operatorApprovals;
+    mapping(uint256 => address) public kittyIndexToApproved; // Giving ownership rights to another address
+    mapping(address => mapping (address => bool)) private _operatorApprovals; // Takes address of another owner and then operator address and returns T/F
     
     uint256 public gen0Counter;
 
@@ -275,85 +276,6 @@ function transferFrom(address _from, address _to, uint256 _tokenId) public overr
         return newDNA;
     }
 
-    function _mixDna(uint256 dadDNA, uint256 momDNA) internal view returns (uint256) {
-        {
-
-    uint256[8] memory geneArray;
-
-    //pseudo-random: Not used for betting and monetary stuff
-
-    //binary 8bit between 00000000 to 11111111
-
-    uint8 random = uint8(
-
-        uint256(
-
-            keccak256(abi.encodePacked(block.timestamp, block.difficulty))
-
-        ) % 255
-
-    );
-
-    //1, 2, 4, 8, 16, 32, 64, 128, loop through 8 times
-
-    //values of the 8 numbers above in binary
-
-    //00000001, 00000010, 00000100, 00001000,
-
-    //00010000, 00100000, 01000000, 10000000
-
-    //bitwise operator &
-
-    uint256 i = 1;
-
-    uint256 index = 7;
-
-    for (i = 1; i <= 128; i *= 2) {
-
-        if (random & i != 0) {
-
-            geneArray[index] = uint8(momDNA % 100); //last pair
-
-        } else {
-
-            geneArray[index] = uint8(dadDNA % 100);
-
-        }
-
-        //now remove last pair from dna
-
-        momDNA /= 100;
-
-        dadDNA /= 100;
-
-        //reduce index to set position to previous (e.g. from 7 to 6)
-
-        index--;
 
     }
 
-    //create DNA into a full number
-
-    uint256 newGene;
-
-    for (i = 0; i < 8; i++) {
-
-        newGene += geneArray[i]; //add first pair to mewGene
-
-        if (i != 7) {
-
-            //to not add 2 zeroes after the last pair
-
-            newGene *= 100; //adds two zeroes (00), at the end of each pair
-
-        }
-
-    }
-
-    return newGene;
-
-}
-    }
-
-}   
-  
