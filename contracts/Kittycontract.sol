@@ -174,8 +174,8 @@ function transferFrom(address _from, address _to, uint256 _tokenId) public overr
         require(_owns(msg.sender,_momId),'Mom token does not belong to the owner');
 
         Kitty memory dad = kitties[_dadId];
-        Kitty memory mum = kitties[_momId];
-        uint babyDNA = _mixDNA(dad.genes,mum.genes);
+        Kitty memory mom = kitties[_momId];
+        uint babyDNA = _mixDNA(dad.genes,mom.genes);
         uint babyGEN = (_dadId >= _momId) ? (_dadId + 1):( _momId + 1);
 
         return _createKitty(_momId,_dadId,babyDNA,babyGEN,msg.sender);
