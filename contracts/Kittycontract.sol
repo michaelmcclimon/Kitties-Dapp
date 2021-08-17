@@ -42,7 +42,6 @@ contract Kittycontract is IERC721, Ownable {
 
     mapping (uint256 => address) public kittyIndexToOwner; // tokenId => kitty owner
     mapping (address => uint) ownershipTokenCount; //count of how many kitties each owner has
-    
     mapping(uint256 => address) public kittyIndexToApproved; // Giving ownership rights to another address
     mapping(address => mapping (address => bool)) private _operatorApprovals; // Takes address of another owner and then operator address and returns T/F
     
