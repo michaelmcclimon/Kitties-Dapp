@@ -38,7 +38,7 @@ async function createKitty() {
                 $("#kittyCreated").css("display", "block");
                 $("#kittyCreated").text("Kitten Id: " + newKittenId +
                                        " Owner: " + owner + 
-                                       " MumId: " + momId + 
+                                       " MomId: " + momId + 
                                        " DadId: " + dadId +
                                        " Genes: " + genes );
             }) 
