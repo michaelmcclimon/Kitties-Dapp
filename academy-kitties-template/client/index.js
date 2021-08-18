@@ -14,7 +14,6 @@ $(document).ready(function(){
     })
 })
 
-
 async function createKitty() {
     var dnaString = getDna();
     console.log(dnaString);
