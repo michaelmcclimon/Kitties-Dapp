@@ -199,5 +199,4 @@ $('#reset').click(()=>{
   animationsPlayer(defaultDNA.animation)
   $("#animation").val(defaultDNA.animation)
 
-  
 })
