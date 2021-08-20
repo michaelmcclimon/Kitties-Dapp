@@ -14,7 +14,6 @@ var defaultDNA = {
     "animation" :  1,
     "lastNum" :  1
     }
-
 // when page load
 $( document ).ready(function() {
   $('#dnabody').html(defaultDNA.headColor);
