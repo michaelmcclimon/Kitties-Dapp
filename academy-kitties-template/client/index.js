@@ -12,7 +12,7 @@ $(document).ready(function(){
         console.log(instance);
         
     })
-})
+}) 
 
 async function createKitty() {
     var dnaString = getDna();
