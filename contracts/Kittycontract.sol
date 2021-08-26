@@ -5,7 +5,7 @@ import "./IERC721.sol";
 import "./IERC721Receiver.sol";
 import "./Ownable.sol";
 
-contract Kittycontract is IERC721, Ownable {
+contract Kittycontract is IERC721, Ownable { 
      
     // Gen 0 Creation Limit
     uint256 public constant CREATION_LIMIT_GEN0 = 10;
