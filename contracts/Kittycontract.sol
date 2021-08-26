@@ -9,7 +9,7 @@ contract Kittycontract is IERC721, Ownable {
      
     // Gen 0 Creation Limit
     uint256 public constant CREATION_LIMIT_GEN0 = 10;
-
+ 
     // Token name
     string public constant override name = "MickeyKitties";
 
